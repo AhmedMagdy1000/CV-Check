@@ -47,7 +47,62 @@ section{padding:3rem 0}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
 .step{background:#fff;border:1px solid var(--bor);border-radius:12px;padding:1.25rem;text-align:center}
 .sn2{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--bs);color:var(--bd);font-weight:700;margin-bottom:.5rem}
-footer{background:var(--ink);color:#cbd5e1;padding:2rem 0;margin-top:2rem;font-size:.85rem;text-align:center}
+<style>
+.faq-w{max-width:720px;margin:0 auto}
+.faq-i{background:#fff;border:1px solid var(--bor);border-radius:10px;margin-bottom:.6rem;overflow:hidden}
+.faq-q{padding:.9rem 1.15rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.95rem}
+.faq-q::after{content:"+";color:var(--b);font-size:1.3rem;font-weight:400}
+.faq-i.op .faq-q::after{content:"−"}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s;padding:0 1.15rem;color:var(--s);font-size:.88rem}
+.faq-i.op .faq-a{padding:0 1.15rem .9rem;max-height:500px}
+</style>
+<section id="faq" style="background:#fff"><div class="c">
+  <h2 class="st2" id="faqT">Frequent questions</h2>
+  <p class="sub2" id="faqS">Everything you're probably wondering before you upload your CV.</p>
+  <div class="faq-w" id="faqL"></div>
+</div></section>
+<script>
+const FAQ={
+  en:[
+    ["How is this different from ChatGPT?","ChatGPT gives generic CV advice written for a US audience. We run 15+ structured checks tuned to how MENA recruiters actually screen — Arabic vs English norms, photo and military-status conventions, Egyptian and Gulf expat signals, keyword density against the specific job you're applying to. We also auto-rewrite the weak bullets rather than just commenting, so you get an improved CV, not a lecture."],
+    ["Is my CV really private?","Yes. Your file is parsed directly in your browser, text is sent only to the AI for analysis, and all data is deleted within 24 hours. We never sell your CV or share it with recruiters or third parties."],
+    ["Do you support Arabic CVs?","Yes. We auto-detect the language of your CV and produce feedback in the same language. You can also manually switch the interface between English and Arabic at any time using the toggle at the top of the page."],
+    ["What payment methods do you accept?","Visa, Mastercard, Meeza, Fawry reference codes, Vodafone Cash, and Instapay. All common Egyptian payment methods work. We bill in EGP — no hidden currency conversion."],
+    ["Can I get a refund?","If the tool fails to generate your improved CV within 24 hours, we refund automatically — no questions asked. We don't offer refunds on successful reports because the content is delivered immediately upon payment."],
+    ["Is the AI rewrite safe — will it make things up?","No. We constrain the AI to rewriting what you already wrote, more clearly and with stronger verbs. It cannot invent experience you don't have. You review and accept or reject every single suggestion before it gets applied to your final CV, so you're always in control of what appears."],
+    ["How long does the analysis take?","About 30 seconds from upload to first results. The AI rewrite step after payment takes another 20–40 seconds depending on CV length."],
+    ["Can I analyse my CV against multiple jobs?","Yes. One purchase unlocks full analysis for the CV you uploaded. You can paste different job descriptions and re-score the same CV against each one as many times as you want within 30 days of purchase."]
+  ],
+  ar:[
+    ["إيه الفرق بين الأداة دي و ChatGPT؟","ChatGPT بيعطي نصائح عامة مكتوبة لجمهور أمريكي. إحنا بنعمل أكتر من 15 فحص منظم مضبوطين على طريقة فرز المسؤولين في الشرق الأوسط — الفرق بين العربي والإنجليزي، معايير الصورة والخدمة العسكرية، إشارات الخليج، والكلمات المفتاحية ضد وظيفة معينة. كمان بنعيد كتابة الجمل الضعيفة، مش بس بنعلق عليها."],
+    ["هل سيرتي الذاتية فعلاً خاصة؟","نعم. ملفك بيتحلل في المتصفح بتاعك، والنص بيتبعت للذكاء الاصطناعي للتحليل فقط، وبيتم حذف كل البيانات خلال 24 ساعة. مش هنبيع سيرتك الذاتية أو نشاركها مع أي حد."],
+    ["هل تدعمون السير العربية؟","نعم. بنكتشف لغة السيرة تلقائياً وننتج الملاحظات بنفس اللغة. تقدر كمان تبدل الواجهة بين العربي والإنجليزي في أي وقت من الزر فوق."],
+    ["إيه وسائل الدفع المقبولة؟","فيزا، ماستركارد، ميزة، أكواد فوري، فودافون كاش، وانستا باي. كل الوسائل المصرية المعروفة شغالة. الدفع بالجنيه المصري — بدون تحويل عملة."],
+    ["هل يمكنني استرداد المال؟","لو الأداة فشلت في إنتاج سيرتك المحسّنة خلال 24 ساعة، بنرجع الفلوس تلقائياً. مش بنقدم استرداد للتقارير الناجحة لأن المحتوى بيتسلم فوراً بعد الدفع."],
+    ["هل إعادة الكتابة بالذكاء الاصطناعي آمنة؟","نعم. بنقيّد الذكاء الاصطناعي بإعادة صياغة اللي كتبته بوضوح أكبر وأفعال أقوى. مش ممكن يخترع خبرة ما عندكش. إنت بتراجع وتوافق أو ترفض كل اقتراح قبل ما يتطبق على السيرة النهائية."],
+    ["كم يستغرق التحليل؟","حوالي 30 ثانية من الرفع لظهور أول النتائج. إعادة الكتابة بالذكاء الاصطناعي بعد الدفع بتاخد 20-40 ثانية إضافية حسب طول السيرة."],
+    ["هل يمكنني تقييم سيرتي ضد أكثر من وظيفة؟","نعم. الشراء الواحد يفتح التحليل الكامل للسيرة اللي رفعتها. تقدر تلصق أوصاف وظائف مختلفة وتعيد التقييم لنفس السيرة كام مرة ما تحب خلال 30 يوم من الشراء."]
+  ]
+};
+function renderFAQ(){
+  const list=document.getElementById("faqL");if(!list)return;
+  list.innerHTML="";
+  const lang=document.body.dataset.lang||"en";
+  FAQ[lang].forEach(([q,a])=>{
+    const d=document.createElement("div");d.className="faq-i";
+    d.innerHTML=`<div class="faq-q">${q}</div><div class="faq-a"><div style="padding-top:.25rem;line-height:1.6">${a}</div></div>`;
+    d.querySelector(".faq-q").addEventListener("click",()=>d.classList.toggle("op"));
+    list.appendChild(d);
+  });
+  const lbl=document.getElementById("faqT");if(lbl)lbl.textContent=lang==="ar"?"أسئلة متكررة":"Frequent questions";
+  const sub=document.getElementById("faqS");if(sub)sub.textContent=lang==="ar"?"كل اللي غالباً بتفكر فيه قبل ما ترفع سيرتك.":"Everything you're probably wondering before you upload your CV.";
+}
+renderFAQ();
+const _origLang=document.getElementById("lb");
+if(_origLang)_origLang.addEventListener("click",()=>setTimeout(renderFAQ,10));
+</script>
+
+  footer{background:var(--ink);color:#cbd5e1;padding:2rem 0;margin-top:2rem;font-size:.85rem;text-align:center}
 .mb{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:flex-start;justify-content:center;padding:1.25rem;overflow-y:auto}
 .mb.on{display:flex}
 .mc{background:#fff;border-radius:18px;max-width:640px;width:100%;padding:1.75rem;position:relative;margin:auto;max-height:92vh;overflow-y:auto}
